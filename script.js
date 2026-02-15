@@ -30,6 +30,41 @@ window.addEventListener('load', function() {
     window.scrollTo(0, 0);
 });
 
+// Theme toggle
+function initTheme() {
+    const saved = localStorage.getItem('zakatTheme');
+    if (saved === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        updateThemeButton('dark');
+    }
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const newTheme = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme === 'dark' ? 'dark' : '');
+    if (newTheme === 'light') document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('zakatTheme', newTheme);
+    updateThemeButton(newTheme);
+}
+
+function updateThemeButton(theme) {
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+    if (theme === 'dark') {
+        icon.textContent = 'light_mode';
+        label.setAttribute('data-i18n', 'lightMode');
+        label.textContent = t('lightMode');
+    } else {
+        icon.textContent = 'dark_mode';
+        label.setAttribute('data-i18n', 'darkMode');
+        label.textContent = t('darkMode');
+    }
+}
+
+// Initialize theme early to prevent flash
+initTheme();
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     loadFromStorage();

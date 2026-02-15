@@ -25,11 +25,17 @@
                     <h1 class="hero-title" data-i18n="appTitle">Zakat Calculator</h1>
                     <p class="hero-subtitle" data-i18n="appSubtitle">According to Ahle Sunnat wal Jamat (Barelvi) • Track, Calculate & Pay</p>
                 </div>
-                <div class="lang-switcher no-print">
-                    <button class="lang-btn active" data-lang="en" onclick="applyLanguage('en')">EN</button>
-                    <button class="lang-btn" data-lang="ur" onclick="applyLanguage('ur')">اردو</button>
-                    <button class="lang-btn" data-lang="bn" onclick="applyLanguage('bn')">বাংলা</button>
-                    <button class="lang-btn" data-lang="hi" onclick="applyLanguage('hi')">हिन्दी</button>
+                <div class="header-controls no-print">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+                        <span class="material-icons" id="themeIcon">dark_mode</span>
+                        <span id="themeLabel" data-i18n="darkMode">Dark</span>
+                    </button>
+                    <div class="lang-switcher">
+                        <button class="lang-btn active" data-lang="en" onclick="applyLanguage('en')">EN</button>
+                        <button class="lang-btn" data-lang="ur" onclick="applyLanguage('ur')">اردو</button>
+                        <button class="lang-btn" data-lang="bn" onclick="applyLanguage('bn')">বাংলা</button>
+                        <button class="lang-btn" data-lang="hi" onclick="applyLanguage('hi')">हिन्दी</button>
+                    </div>
                 </div>
             </div>
         </div>
