@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     
     <!-- Material Design CSS -->
     <link href="https://unpkg.com/material-components-web@14.0.0/dist/material-components-web.min.css" rel="stylesheet">
@@ -27,13 +27,13 @@
     <!-- Navigation Tabs -->
     <nav class="nav-tabs no-print">
         <div class="nav-tabs-container">
-            <button class="nav-tab active" onclick="switchTab('calculator')">
-                <span class="material-icons">calculate</span>
-                Calculator
-            </button>
-            <button class="nav-tab" onclick="switchTab('dashboard')">
+            <button class="nav-tab active" onclick="switchTab('dashboard')">
                 <span class="material-icons">dashboard</span>
                 Dashboard
+            </button>
+            <button class="nav-tab" onclick="switchTab('calculator')">
+                <span class="material-icons">calculate</span>
+                Calculator
             </button>
             <button class="nav-tab" onclick="switchTab('payments')">
                 <span class="material-icons">payment</span>
@@ -48,7 +48,7 @@
 
     <div class="container">
         <!-- Calculator Tab -->
-        <div id="calculator" class="tab-content active">
+        <div id="calculator" class="tab-content">
             <!-- Info Banner -->
             <div class="info-banner no-print">
                 <div class="info-banner-title">
@@ -73,10 +73,10 @@
                             Select Currency
                         </div>
                         <div class="currency-grid">
-                            <button class="currency-btn active" onclick="setCurrency('USD', '$')">USD ($)</button>
+                            <button class="currency-btn" onclick="setCurrency('USD', '$')">USD ($)</button>
                             <button class="currency-btn" onclick="setCurrency('EUR', '€')">EUR (€)</button>
                             <button class="currency-btn" onclick="setCurrency('GBP', '£')">GBP (£)</button>
-                            <button class="currency-btn" onclick="setCurrency('INR', '₹')">INR (₹)</button>
+                            <button class="currency-btn active" onclick="setCurrency('INR', '\u20B9')">INR (&#8377;)</button>
                             <button class="currency-btn" onclick="setCurrency('PKR', '₨')">PKR (₨)</button>
                             <button class="currency-btn" onclick="setCurrency('SAR', 'SR')">SAR</button>
                             <button class="currency-btn" onclick="setCurrency('AED', 'AED')">AED</button>
@@ -84,24 +84,31 @@
                         </div>
                     </div>
 
-                    <!-- Silver Price -->
+                    <!-- Metal Rates & Nisab -->
                     <div class="card">
                         <div class="card-title">
                             <span class="material-icons">trending_up</span>
-                            Current Silver Price
+                            Current Metal Rates (per gram)
                         </div>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
                             <div class="input-group">
-                                <label class="input-label">Silver Price per Gram</label>
+                                <label class="input-label">Gold Rate / gram</label>
                                 <div class="input-with-icon">
-                                    <span class="input-icon currency-symbol">$</span>
-                                    <input type="number" id="silverPrice" class="input-field" value="0.75" step="0.01" oninput="calculateZakat()">
+                                    <span class="input-icon currency-symbol">&#8377;</span>
+                                    <input type="number" id="goldRate" class="input-field" value="0" step="0.01" oninput="calculateZakat()">
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label class="input-label">Silver Rate / gram</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon currency-symbol">&#8377;</span>
+                                    <input type="number" id="silverPrice" class="input-field" value="90" step="0.01" oninput="calculateZakat()">
                                 </div>
                             </div>
                             <div class="input-group">
                                 <label class="input-label">Nisab Threshold</label>
                                 <div style="background: rgba(0,105,92,0.05); padding: 1rem; border-radius: 8px; border: 2px solid var(--primary-color);">
-                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);" id="nisabThreshold">$0.00</div>
+                                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);" id="nisabThreshold">&#8377;0.00</div>
                                     <div style="font-size: 0.8rem; color: var(--text-secondary);">612.36g of silver</div>
                                 </div>
                             </div>
@@ -132,12 +139,15 @@
                         <div class="asset-category">
                             <div class="category-header">
                                 <span class="material-icons">circle</span>
-                                Gold
+                                Gold (enter weight in grams)
                             </div>
                             <div id="gold-container"></div>
-                            <button class="btn-add" onclick="addAssetField('gold-container')">
+                            <div class="metal-total" style="margin-top: 0.5rem; font-weight: 600; color: var(--primary-dark);">
+                                Total Gold Value: <span id="goldTotalValue">0.00</span>
+                            </div>
+                            <button class="btn-add" onclick="addMetalField('gold-container', 'gold')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Item
+                                Add Gold Item
                             </button>
                         </div>
 
@@ -145,12 +155,15 @@
                         <div class="asset-category">
                             <div class="category-header">
                                 <span class="material-icons">circle_outlined</span>
-                                Silver
+                                Silver (enter weight in grams)
                             </div>
                             <div id="silver-container"></div>
-                            <button class="btn-add" onclick="addAssetField('silver-container')">
+                            <div class="metal-total" style="margin-top: 0.5rem; font-weight: 600; color: var(--primary-dark);">
+                                Total Silver Value: <span id="silverTotalValue">0.00</span>
+                            </div>
+                            <button class="btn-add" onclick="addMetalField('silver-container', 'silver')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Item
+                                Add Silver Item
                             </button>
                         </div>
 
@@ -250,17 +263,17 @@
 
                         <div style="margin-bottom: 1.5rem;">
                             <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.25rem;">Total Assets</div>
-                            <div style="font-size: 2rem; font-weight: 700;" id="totalAssets">$0.00</div>
+                            <div style="font-size: 2rem; font-weight: 700;" id="totalAssets">&#8377;0.00</div>
                         </div>
 
                         <div style="margin-bottom: 1.5rem;">
                             <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.25rem;">Total Debts</div>
-                            <div style="font-size: 1.5rem; font-weight: 600; color: #ffcdd2;" id="totalDebts">$0.00</div>
+                            <div style="font-size: 1.5rem; font-weight: 600; color: #ffcdd2;" id="totalDebts">&#8377;0.00</div>
                         </div>
 
                         <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.2);">
                             <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.25rem;">Net Zakatable Wealth</div>
-                            <div style="font-size: 1.75rem; font-weight: 700;" id="netWealth">$0.00</div>
+                            <div style="font-size: 1.75rem; font-weight: 700;" id="netWealth">&#8377;0.00</div>
                             <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 0.25rem;">Assets - Debts</div>
                         </div>
 
@@ -272,7 +285,7 @@
                         <div id="zakatDueSection" style="display: none;">
                             <div style="background: white; color: var(--primary-dark); padding: 1.5rem; border-radius: 8px; text-align: center;">
                                 <div style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 0.5rem;">Your Zakat Amount</div>
-                                <div style="font-size: 3rem; font-weight: 800;" id="zakatAmount">$0.00</div>
+                                <div style="font-size: 3rem; font-weight: 800;" id="zakatAmount">&#8377;0.00</div>
                                 <div style="font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem;">2.5% of Net Wealth</div>
                             </div>
                         </div>
@@ -305,29 +318,29 @@
         </div>
 
         <!-- Dashboard Tab -->
-        <div id="dashboard" class="tab-content">
+        <div id="dashboard" class="tab-content active">
             <div class="dashboard-grid">
                 <div class="stat-card">
                     <div class="stat-label">Total Zakat Due</div>
-                    <div class="stat-value" id="dashTotalZakat">$0.00</div>
+                    <div class="stat-value" id="dashTotalZakat">&#8377;0.00</div>
                     <div class="stat-subtitle">2.5% of net wealth</div>
                 </div>
 
                 <div class="stat-card success">
                     <div class="stat-label">Total Paid</div>
-                    <div class="stat-value" style="color: var(--success-color);" id="dashTotalPaid">$0.00</div>
+                    <div class="stat-value" style="color: var(--success-color);" id="dashTotalPaid">&#8377;0.00</div>
                     <div class="stat-subtitle" id="dashPaymentCount">0 payments made</div>
                 </div>
 
                 <div class="stat-card warning">
                     <div class="stat-label">Remaining</div>
-                    <div class="stat-value" style="color: var(--warning-color);" id="dashRemaining">$0.00</div>
+                    <div class="stat-value" style="color: var(--warning-color);" id="dashRemaining">&#8377;0.00</div>
                     <div class="stat-subtitle">Still to pay</div>
                 </div>
 
                 <div class="stat-card">
                     <div class="stat-label">Net Wealth</div>
-                    <div class="stat-value" id="dashNetWealth">$0.00</div>
+                    <div class="stat-value" id="dashNetWealth">&#8377;0.00</div>
                     <div class="stat-subtitle">Total zakatable wealth</div>
                 </div>
             </div>
@@ -344,7 +357,7 @@
                     </div>
                     <div class="progress-text">
                         <span id="progressPercent">0%</span>
-                        <span id="progressAmount">$0 / $0</span>
+                        <span id="progressAmount">&#8377;0 / &#8377;0</span>
                     </div>
                 </div>
             </div>
@@ -421,7 +434,7 @@
             <div class="input-group">
                 <label class="input-label">Payment Amount</label>
                 <div class="input-with-icon">
-                    <span class="input-icon currency-symbol">$</span>
+                    <span class="input-icon currency-symbol">&#8377;</span>
                     <input type="number" id="paymentAmount" class="input-field" step="0.01" placeholder="0.00">
                 </div>
             </div>
@@ -449,3 +462,4 @@
     <script src="script.js"></script>
 </body>
 </html>
+
