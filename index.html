@@ -385,26 +385,13 @@
                 </div>
             </div>
 
-            <!-- Quick Actions -->
+            <!-- FAQ / Q&A Section -->
             <div class="card">
                 <div class="card-title">
-                    <span class="material-icons">bolt</span>
-                    <span data-i18n="quickActions">Quick Actions</span>
+                    <span class="material-icons">help_outline</span>
+                    <span data-i18n="faqTitle">Frequently Asked Questions</span>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                    <button class="btn btn-success" onclick="openPaymentModal()">
-                        <span class="material-icons">add</span>
-                        <span data-i18n="recordPayment">Record Payment</span>
-                    </button>
-                    <button class="btn btn-secondary" onclick="switchTab('calculator')">
-                        <span class="material-icons">refresh</span>
-                        <span data-i18n="recalculateZakat">Recalculate Zakat</span>
-                    </button>
-                    <button class="btn btn-secondary" onclick="switchTab('payments')">
-                        <span class="material-icons">history</span>
-                        <span data-i18n="viewAllPayments">View All Payments</span>
-                    </button>
-                </div>
+                <div id="faqContainer"></div>
             </div>
 
             <!-- Recent Payments -->

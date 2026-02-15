@@ -1,0 +1,145 @@
+{
+  "zakaat": {
+    "farziyat": {
+      "question": "Zakaat farz hai ya wajib?",
+      "answer": "Zakaat farz hai. Iski farziyat ka inkar karne wala kafir, na ada karne wala faasiq aur adayegi mein der karne wala gunahgar mardoodushshahadah (gawahi ke qabil nahi) hai.",
+      "reference": "Bahaare Shariat"
+    },
+    "conditions": {
+      "question": "Zakaat farz hone ki shartein kya hain?",
+      "reference": "Anwaare Shariat 113",
+      "answer": [
+        "Musalman hona",
+        "Aaqil aur baligh hona",
+        "Maal ba-qadr-e-nisab ka poori milkiyat mein hona",
+        "Nisab haajate asliya se zyada hona",
+        "Qarz se faarigh hona",
+        "Maal sona, chandi ya maale tijarat hona",
+        "Maal par poora saal guzar jana"
+      ]
+    },
+    "nisab": {
+      "gold": {
+        "nisab": "7.5 tola",
+        "zakaat": "40va hissa (2.125 maasha)"
+      },
+      "silver": {
+        "nisab": "52.5 tola",
+        "zakaat": "1 tola 3 maasha 6 ratti"
+      },
+      "note": "Sona chandi ke bajaye bazar bhaav se qeemat laga kar rupya dena jaaiz hai"
+    },
+    "jewellery": {
+      "question": "Kya sona chandi ke zewraat mein zakaat wajib hoti hai?",
+      "answer": "Haan, sona chandi ke zewraat mein bhi zakaat wajib hoti hai"
+    },
+    "business": {
+      "question": "Tijarati maal ka nisab kya hai?",
+      "reference": "Anwaare Shariat 114",
+      "answer": "Tijarati maal ki qeemat laga kar agar sona ya chandi ka nisab poora hota ho to uske hisab se zakaat wajib hoti hai"
+    },
+    "cash": {
+      "question": "Kam se kam kitne rupye ho ki zakaat wajib hoti hai?",
+      "answer": "Agar sona, chandi ya tijarat ka maal na ho aur itne rupye ho ki bazar mein 52.5 tola chandi ya 7.5 tola sona khareeda ja sake to zakaat wajib hoti hai"
+    },
+    "basic_needs": {
+      "question": "Haajate asliya kise kehte hain?",
+      "answer": [
+        "Kapde (garmiyon aur sardiyon ke)",
+        "Ghar ka samaan",
+        "Pesha ke auzaar",
+        "Sawari jaise cycle, motor"
+      ],
+      "note": "In cheezon par zakaat wajib nahi"
+    },
+    "debt": {
+      "question": "Qarz se faarigh hone ka kya matlab hai?",
+      "answer": "Agar qarz ada karne ke baad nisab baqi rahe to zakaat wajib hai, warna nahi"
+    },
+    "year_completion": {
+      "question": "Maal par poora saal guzar jana kya hai?",
+      "reference": "Anwaare Shariat 115",
+      "answer": "Jis tareekh ko nisab poora ho us din se saal shuru hota hai. Saal ke dauran kami ho jaye to asar nahi karta"
+    }
+  },
+  "ushr": {
+    "crops": {
+      "question": "Kin cheezon par ushr wajib hai?",
+      "answer": [
+        "Gehoo, jau, jwaar, baajra, dhaan",
+        "Har qism ke ghalle",
+        "Alsi, kusum",
+        "Akhrot, badam, har qism ke mewe",
+        "Rui, phool, ganna",
+        "Kharbooza, tarbooz, kheera, kakdi, baingan",
+        "Har qism ki tarkaari"
+      ],
+      "note": "Thoda ho ya zyada, ushr wajib hota hai"
+    },
+    "rate": {
+      "rain_water": "10va hissa",
+      "artificial_irrigation": "20va hissa"
+    },
+    "expenses": {
+      "question": "Kya kheti ke kharch nikaal kar ushr diya jata hai?",
+      "answer": "Nahi, poori paidawar par ushr wajib hota hai",
+      "reference": "Anwaare Shariat 116"
+    },
+    "government_tax": {
+      "question": "Government ko di gayi lagaan ushr se minus hogi?",
+      "answer": "Nahi"
+    },
+    "share_cropping": {
+      "question": "Zameen batai par ho to ushr kis par hai?",
+      "answer": "Donon par wajib hai"
+    }
+  },
+  "distribution": {
+    "eligible": {
+      "question": "Zakaat aur ushr kin logon ko diya jata hai?",
+      "reference": "Anwaare Shariat 117",
+      "answer": [
+        "Faqeer (maal hai lekin nisab nahi)",
+        "Miskeen (khane aur kapde ka bhi intezam nahi)",
+        "Qarzdaar (qarz se zyada maal nahi)",
+        "Musafir (safar mein be-maal ho gaya ho)"
+      ]
+    },
+    "not_eligible": {
+      "question": "Kin logon ko zakaat dena jaaiz nahi?",
+      "answer": [
+        "Maalik-e-nisab",
+        "Bani Hashim",
+        "Maa-baap, dada-dadi, nana-nani",
+        "Beta, beti, pota-poti, nawasa-nawasi",
+        "Biwi aur shauhar (iddat ke dauran bhi)",
+        "Maalik-e-nisab ke nabalig bachche",
+        "Kafir, murtad, badmazhab"
+      ]
+    },
+    "sayyad": {
+      "question": "Sayyad ko zakaat dena jaaiz hai?",
+      "answer": "Nahi, kyunki wo Bani Hashim mein se hain",
+      "reference": "Anwaare Shariat 118"
+    },
+    "masjid_usage": {
+      "question": "Zakaat ka paisa masjid ya madarsa mein lagana jaaiz hai?",
+      "answer": "Nahi, aisa karne se zakaat ada nahi hoti",
+      "reference": "Bahaare Shariat"
+    },
+    "preferred_order": {
+      "question": "Zakaat dene mein kaun afzal hai?",
+      "answer": [
+        "Bhai-behen",
+        "Unki aulad",
+        "Chacha, phoophi",
+        "Mamoo, khala",
+        "Doosre rishtedaar",
+        "Padosi",
+        "Pesha ke log",
+        "Shehar ya gaon ke log",
+        "Deeni talibe ilm (ghair sahibe nisab)"
+      ]
+    }
+  }
+}

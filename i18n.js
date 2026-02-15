@@ -128,6 +128,7 @@ const translations = {
         footerRights: 'All rights reserved.',
         darkMode: 'Dark',
         lightMode: 'Light',
+        faqTitle: 'Frequently Asked Questions',
     },
 
     ur: {
@@ -239,6 +240,7 @@ const translations = {
         footerRights: '\u062C\u0645\u0644\u06C1 \u062D\u0642\u0648\u0642 \u0645\u062D\u0641\u0648\u0638 \u06C1\u06CC\u06BA\u06D4',
         darkMode: '\u0688\u0627\u0631\u06A9',
         lightMode: '\u0644\u0627\u0626\u0679',
+        faqTitle: '\u0627\u06A9\u062B\u0631 \u067E\u0648\u0686\u06BE\u06D2 \u062C\u0627\u0646\u06D2 \u0648\u0627\u0644\u06D2 \u0633\u0648\u0627\u0644\u0627\u062A',
     },
 
     bn: {
@@ -350,6 +352,7 @@ const translations = {
         footerRights: '\u09B8\u09B0\u09CD\u09AC\u09B8\u09CD\u09AC\u09A4\u09CD\u09AC \u09B8\u0982\u09B0\u0995\u09CD\u09B7\u09BF\u09A4\u0964',
         darkMode: '\u09A1\u09BE\u09B0\u09CD\u0995',
         lightMode: '\u09B2\u09BE\u0987\u099F',
+        faqTitle: '\u099C\u09BF\u099C\u09CD\u099E\u09BE\u09B8\u09BF\u09A4 \u09AA\u09CD\u09B0\u09B6\u09CD\u09A8\u09BE\u09AC\u09B2\u09C0',
     },
 
     hi: {
@@ -461,6 +464,7 @@ const translations = {
         footerRights: '\u0938\u0930\u094D\u0935\u093E\u0927\u093F\u0915\u093E\u0930 \u0938\u0941\u0930\u0915\u094D\u0937\u093F\u0924\u0964',
         darkMode: '\u0921\u093E\u0930\u094D\u0915',
         lightMode: '\u0932\u093E\u0907\u091F',
+        faqTitle: '\u0905\u0915\u094D\u0938\u0930 \u092A\u0942\u091B\u0947 \u091C\u093E\u0928\u0947 \u0935\u093E\u0932\u0947 \u0938\u0935\u093E\u0932',
     }
 };
 
@@ -504,6 +508,7 @@ function applyLanguage(lang) {
     // Re-render dynamic content
     if (typeof calculateZakat === 'function') calculateZakat();
     if (typeof updateDashboard === 'function') updateDashboard();
+    if (typeof loadFAQ === 'function') loadFAQ(lang);
 }
 
 // Load saved language on startup

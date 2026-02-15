@@ -65,12 +65,156 @@ function updateThemeButton(theme) {
 // Initialize theme early to prevent flash
 initTheme();
 
+// FAQ data cache
+let faqDataCache = {};
+
+const faqFileMap = {
+    en: 'assets/zakaat-en.json',
+    ur: 'assets/zakaat-ur.json',
+    bn: 'assets/zakaat-bn.json',
+    hi: 'assets/zakaat-hi.json'
+};
+
+const faqSectionIcons = {
+    zakaat: 'account_balance_wallet',
+    ushr: 'grass',
+    distribution: 'volunteer_activism'
+};
+
+function loadFAQ(lang) {
+    const file = faqFileMap[lang] || faqFileMap['en'];
+    if (faqDataCache[lang]) {
+        renderFAQ(faqDataCache[lang], lang);
+        return;
+    }
+    fetch(file)
+        .then(res => res.json())
+        .then(data => {
+            faqDataCache[lang] = data;
+            renderFAQ(data, lang);
+        })
+        .catch(() => {
+            // Fallback to English
+            if (lang !== 'en') loadFAQ('en');
+        });
+}
+
+function renderFAQ(data, lang) {
+    const container = document.getElementById('faqContainer');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const sections = ['zakaat', 'ushr', 'distribution'];
+    const sectionNames = {
+        en: { zakaat: 'Zakat', ushr: 'Ushr (Agricultural Tax)', distribution: 'Distribution' },
+        ur: { zakaat: '\u0632\u06A9\u0627\u06C3', ushr: '\u0639\u0634\u0631', distribution: '\u062A\u0642\u0633\u06CC\u0645' },
+        bn: { zakaat: '\u09AF\u09BE\u0995\u09BE\u09A4', ushr: '\u0989\u09B6\u09B0', distribution: '\u09AC\u09A8\u09CD\u099F\u09A8' },
+        hi: { zakaat: '\u091C\u093C\u0915\u093E\u0924', ushr: '\u0909\u0936\u094D\u0930', distribution: '\u0935\u093F\u0924\u0930\u0923' }
+    };
+
+    sections.forEach(section => {
+        const sectionData = data[section];
+        if (!sectionData) return;
+
+        const icon = faqSectionIcons[section] || 'help_outline';
+        const name = (sectionNames[lang] || sectionNames['en'])[section];
+
+        const title = document.createElement('div');
+        title.className = 'faq-section-title';
+        title.innerHTML = '<span class="material-icons">' + icon + '</span>' + name;
+        container.appendChild(title);
+
+        Object.keys(sectionData).forEach(key => {
+            const entry = sectionData[key];
+            if (!entry || typeof entry !== 'object') return;
+
+            // Extract question
+            let question = entry.question;
+            if (!question) return;
+
+            // Build answer HTML
+            let answerHtml = '';
+            const answerData = entry.answer || entry.list || entry.order;
+
+            if (Array.isArray(answerData)) {
+                answerHtml += '<ul>';
+                answerData.forEach(item => { answerHtml += '<li>' + escapeHtml(item) + '</li>'; });
+                answerHtml += '</ul>';
+            } else if (typeof answerData === 'string') {
+                answerHtml += '<p>' + escapeHtml(answerData) + '</p>';
+            }
+
+            // Check for sub-objects (like nisab gold/silver)
+            if (entry.gold || entry.silver) {
+                answerHtml += '<ul>';
+                if (entry.gold) answerHtml += '<li><strong>' + t('goldLabel') + ':</strong> ' + escapeHtml(entry.gold.nisab) + ' (' + escapeHtml(entry.gold.zakaat) + ')</li>';
+                if (entry.silver) answerHtml += '<li><strong>' + t('silverLabel') + ':</strong> ' + escapeHtml(entry.silver.nisab) + ' (' + escapeHtml(entry.silver.zakaat) + ')</li>';
+                answerHtml += '</ul>';
+            }
+
+            // Check for rate sub-objects
+            if (entry.rain_water || entry.rain_or_moisture) {
+                answerHtml += '<ul>';
+                if (entry.rain_water) answerHtml += '<li>' + escapeHtml(entry.rain_water) + '</li>';
+                if (entry.rain_or_moisture) answerHtml += '<li>' + escapeHtml(entry.rain_or_moisture) + '</li>';
+                if (entry.artificial_irrigation) answerHtml += '<li>' + escapeHtml(entry.artificial_irrigation) + '</li>';
+                if (entry.artificial_water) answerHtml += '<li>' + escapeHtml(entry.artificial_water) + '</li>';
+                answerHtml += '</ul>';
+            }
+
+            // Skip if no answer content at all
+            if (!answerHtml) return;
+
+            // Reference
+            if (entry.reference) {
+                answerHtml += '<div class="faq-reference"><span class="material-icons" style="font-size:0.85rem">menu_book</span> ' + escapeHtml(entry.reference) + '</div>';
+            }
+
+            // Note
+            if (entry.note) {
+                answerHtml += '<div class="faq-note">' + escapeHtml(entry.note) + '</div>';
+            }
+
+            const item = document.createElement('div');
+            item.className = 'faq-item';
+            item.innerHTML =
+                '<button class="faq-question" onclick="toggleFaqItem(this)">' +
+                    '<span>' + escapeHtml(question) + '</span>' +
+                    '<span class="material-icons">expand_more</span>' +
+                '</button>' +
+                '<div class="faq-answer"><div class="faq-answer-inner">' + answerHtml + '</div></div>';
+            container.appendChild(item);
+        });
+    });
+}
+
+function toggleFaqItem(btn) {
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+
+    if (isOpen) {
+        answer.style.maxHeight = '0';
+        item.classList.remove('open');
+    } else {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        item.classList.add('open');
+    }
+}
+
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
     loadFromStorage();
     loadFormData();
     document.getElementById('paymentDate').valueAsDate = new Date();
     initLanguage();
+    loadFAQ(currentLang || 'en');
 });
 
 // Load data from localStorage
