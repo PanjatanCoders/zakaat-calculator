@@ -30,6 +30,18 @@ window.addEventListener('load', function() {
     window.scrollTo(0, 0);
 });
 
+// Scroll to top button
+window.addEventListener('scroll', function() {
+    const btn = document.getElementById('scrollTopBtn');
+    if (btn) {
+        if (window.scrollY > 300) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    }
+});
+
 // Theme toggle
 function initTheme() {
     const saved = localStorage.getItem('zakatTheme');

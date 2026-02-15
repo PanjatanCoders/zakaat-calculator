@@ -917,6 +917,62 @@ body {
     color: var(--text-secondary);
 }
 
+/* Scroll to Top Button */
+.scroll-top-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.scroll-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-top-btn:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+    transform: translateY(-3px);
+}
+
+.scroll-top-btn .material-icons {
+    font-size: 1.5rem;
+}
+
+[dir="rtl"] .scroll-top-btn {
+    right: auto;
+    left: 2rem;
+}
+
+@media (max-width: 768px) {
+    .scroll-top-btn {
+        bottom: 1.25rem;
+        right: 1.25rem;
+        width: 42px;
+        height: 42px;
+    }
+    [dir="rtl"] .scroll-top-btn {
+        right: auto;
+        left: 1.25rem;
+    }
+}
+
 /* Disclaimer Banner */
 .disclaimer-banner {
     background: var(--disclaimer-bg);
