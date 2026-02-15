@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zakat Calculator - Track Your Islamic Wealth</title>
-    
+
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
-    
+
+    <!-- Google Fonts (multi-script) -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;700&family=Noto+Sans+Bengali:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
+
     <!-- Material Design CSS -->
     <link href="https://unpkg.com/material-components-web@14.0.0/dist/material-components-web.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
@@ -19,8 +19,18 @@
     <!-- Hero Header -->
     <header class="hero-header">
         <div class="hero-content">
-            <h1 class="hero-title">Zakat Calculator</h1>
-            <p class="hero-subtitle">According to Ahle Sunnat wal Jamat (Barelvi) • Track, Calculate & Pay</p>
+            <div class="hero-top-row">
+                <div>
+                    <h1 class="hero-title" data-i18n="appTitle">Zakat Calculator</h1>
+                    <p class="hero-subtitle" data-i18n="appSubtitle">According to Ahle Sunnat wal Jamat (Barelvi) • Track, Calculate & Pay</p>
+                </div>
+                <div class="lang-switcher no-print">
+                    <button class="lang-btn active" data-lang="en" onclick="applyLanguage('en')">EN</button>
+                    <button class="lang-btn" data-lang="ur" onclick="applyLanguage('ur')">اردو</button>
+                    <button class="lang-btn" data-lang="bn" onclick="applyLanguage('bn')">বাংলা</button>
+                    <button class="lang-btn" data-lang="hi" onclick="applyLanguage('hi')">हिन्दी</button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -29,19 +39,19 @@
         <div class="nav-tabs-container">
             <button class="nav-tab active" onclick="switchTab('dashboard')">
                 <span class="material-icons">dashboard</span>
-                Dashboard
+                <span data-i18n="navDashboard">Dashboard</span>
             </button>
             <button class="nav-tab" onclick="switchTab('calculator')">
                 <span class="material-icons">calculate</span>
-                Calculator
+                <span data-i18n="navCalculator">Calculator</span>
             </button>
             <button class="nav-tab" onclick="switchTab('payments')">
                 <span class="material-icons">payment</span>
-                Payments
+                <span data-i18n="navPayments">Payments</span>
             </button>
             <button class="nav-tab" onclick="switchTab('history')">
                 <span class="material-icons">history</span>
-                History
+                <span data-i18n="navHistory">History</span>
             </button>
         </div>
     </nav>
@@ -53,13 +63,13 @@
             <div class="info-banner no-print">
                 <div class="info-banner-title">
                     <span class="material-icons">info</span>
-                    Important Information - Please Read
+                    <span data-i18n="infoBannerTitle">Important Information - Please Read</span>
                 </div>
                 <ul>
-                    <li><strong>Nisab Threshold:</strong> Gold only: 7.5 tola (87.48g) | Silver only: 52.5 tola (612.36g) | Mixed assets: Use silver threshold</li>
-                    <li><strong>Lunar Year Requirement:</strong> You must possess the wealth for a complete lunar year (354 days)</li>
-                    <li><strong>Calculation Method:</strong> Zakat is 2.5% of total wealth (not after deducting nisab threshold)</li>
-                    <li><strong>Debts/Loans:</strong> All debts and loans are deducted from total assets before calculating Zakat</li>
+                    <li><strong data-i18n="infoNisab">Nisab Threshold:</strong> <span data-i18n="infoNisabDesc">Gold only: 7.5 tola (87.48g) | Silver only: 52.5 tola (612.36g) | Mixed assets: Use silver threshold</span></li>
+                    <li><strong data-i18n="infoLunarYear">Lunar Year Requirement:</strong> <span data-i18n="infoLunarYearDesc">You must possess the wealth for a complete lunar year (354 days)</span></li>
+                    <li><strong data-i18n="infoCalcMethod">Calculation Method:</strong> <span data-i18n="infoCalcMethodDesc">Zakat is 2.5% of total wealth (not after deducting nisab threshold)</span></li>
+                    <li><strong data-i18n="infoDebts">Debts/Loans:</strong> <span data-i18n="infoDebtsDesc">All debts and loans are deducted from total assets before calculating Zakat</span></li>
                 </ul>
             </div>
 
@@ -70,7 +80,7 @@
                     <div class="card">
                         <div class="card-title">
                             <span class="material-icons">payments</span>
-                            Select Currency
+                            <span data-i18n="selectCurrency">Select Currency</span>
                         </div>
                         <div class="currency-grid">
                             <button class="currency-btn" onclick="setCurrency('USD', '$')">USD ($)</button>
@@ -88,28 +98,28 @@
                     <div class="card">
                         <div class="card-title">
                             <span class="material-icons">trending_up</span>
-                            Current Metal Rates (per gram)
+                            <span data-i18n="metalRatesTitle">Current Metal Rates (per gram)</span>
                         </div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
                             <div class="input-group">
-                                <label class="input-label">Gold Rate / gram</label>
+                                <label class="input-label" data-i18n="goldRateLabel">Gold Rate / gram</label>
                                 <div class="input-with-icon">
                                     <span class="input-icon currency-symbol">&#8377;</span>
                                     <input type="number" id="goldRate" class="input-field" value="0" step="0.01" oninput="calculateZakat()">
                                 </div>
                             </div>
                             <div class="input-group">
-                                <label class="input-label">Silver Rate / gram</label>
+                                <label class="input-label" data-i18n="silverRateLabel">Silver Rate / gram</label>
                                 <div class="input-with-icon">
                                     <span class="input-icon currency-symbol">&#8377;</span>
                                     <input type="number" id="silverPrice" class="input-field" value="90" step="0.01" oninput="calculateZakat()">
                                 </div>
                             </div>
                             <div class="input-group">
-                                <label class="input-label">Nisab Threshold</label>
+                                <label class="input-label" data-i18n="nisabThresholdLabel">Nisab Threshold</label>
                                 <div style="background: rgba(0,105,92,0.05); padding: 1rem; border-radius: 8px; border: 2px solid var(--primary-color);">
                                     <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary-color);" id="nisabThreshold">&#8377;0.00</div>
-                                    <div style="font-size: 0.8rem; color: var(--text-secondary);">612.36g of silver</div>
+                                    <div style="font-size: 0.8rem; color: var(--text-secondary);" data-i18n="nisabSilverNote">612.36g of silver</div>
                                 </div>
                             </div>
                         </div>
@@ -119,19 +129,19 @@
                     <div class="card">
                         <div class="card-title">
                             <span class="material-icons">account_balance_wallet</span>
-                            Your Assets
+                            <span data-i18n="yourAssets">Your Assets</span>
                         </div>
 
                         <!-- Cash -->
                         <div class="asset-category">
                             <div class="category-header">
                                 <span class="material-icons">money</span>
-                                Cash & Bank Accounts
+                                <span data-i18n="cashBank">Cash & Bank Accounts</span>
                             </div>
                             <div id="cash-container"></div>
                             <button class="btn-add" onclick="addAssetField('cash-container')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Item
+                                <span data-i18n="addItem">Add Item</span>
                             </button>
                         </div>
 
@@ -139,15 +149,15 @@
                         <div class="asset-category">
                             <div class="category-header">
                                 <span class="material-icons">circle</span>
-                                Gold (enter weight in grams)
+                                <span data-i18n="goldGrams">Gold (enter weight in grams)</span>
                             </div>
                             <div id="gold-container"></div>
                             <div class="metal-total" style="margin-top: 0.5rem; font-weight: 600; color: var(--primary-dark);">
-                                Total Gold Value: <span id="goldTotalValue">0.00</span>
+                                <span data-i18n="totalGoldValue">Total Gold Value:</span> <span id="goldTotalValue">0.00</span>
                             </div>
                             <button class="btn-add" onclick="addMetalField('gold-container', 'gold')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Gold Item
+                                <span data-i18n="addGoldItem">Add Gold Item</span>
                             </button>
                         </div>
 
@@ -155,15 +165,15 @@
                         <div class="asset-category">
                             <div class="category-header">
                                 <span class="material-icons">circle_outlined</span>
-                                Silver (enter weight in grams)
+                                <span data-i18n="silverGrams">Silver (enter weight in grams)</span>
                             </div>
                             <div id="silver-container"></div>
                             <div class="metal-total" style="margin-top: 0.5rem; font-weight: 600; color: var(--primary-dark);">
-                                Total Silver Value: <span id="silverTotalValue">0.00</span>
+                                <span data-i18n="totalSilverValue">Total Silver Value:</span> <span id="silverTotalValue">0.00</span>
                             </div>
                             <button class="btn-add" onclick="addMetalField('silver-container', 'silver')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Silver Item
+                                <span data-i18n="addSilverItem">Add Silver Item</span>
                             </button>
                         </div>
 
@@ -171,12 +181,12 @@
                         <div class="asset-category">
                             <div class="category-header">
                                 <span class="material-icons">show_chart</span>
-                                Investments & Stocks
+                                <span data-i18n="investmentsStocks">Investments & Stocks</span>
                             </div>
                             <div id="investments-container"></div>
                             <button class="btn-add" onclick="addAssetField('investments-container')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Item
+                                <span data-i18n="addItem">Add Item</span>
                             </button>
                         </div>
 
@@ -184,12 +194,12 @@
                         <div class="asset-category">
                             <div class="category-header">
                                 <span class="material-icons">business</span>
-                                Business Assets & Inventory
+                                <span data-i18n="businessAssets">Business Assets & Inventory</span>
                             </div>
                             <div id="business-container"></div>
                             <button class="btn-add" onclick="addAssetField('business-container')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Item
+                                <span data-i18n="addItem">Add Item</span>
                             </button>
                         </div>
 
@@ -197,12 +207,12 @@
                         <div class="asset-category">
                             <div class="category-header">
                                 <span class="material-icons">home</span>
-                                Investment Property
+                                <span data-i18n="investmentProperty">Investment Property</span>
                             </div>
                             <div id="property-container"></div>
                             <button class="btn-add" onclick="addAssetField('property-container')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Item
+                                <span data-i18n="addItem">Add Item</span>
                             </button>
                         </div>
 
@@ -210,12 +220,12 @@
                         <div class="asset-category">
                             <div class="category-header">
                                 <span class="material-icons">receipt_long</span>
-                                Money Owed to You
+                                <span data-i18n="moneyOwed">Money Owed to You</span>
                             </div>
                             <div id="receivables-container"></div>
                             <button class="btn-add" onclick="addAssetField('receivables-container')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Item
+                                <span data-i18n="addItem">Add Item</span>
                             </button>
                         </div>
 
@@ -223,12 +233,12 @@
                         <div class="asset-category">
                             <div class="category-header">
                                 <span class="material-icons">more_horiz</span>
-                                Other Assets
+                                <span data-i18n="otherAssets">Other Assets</span>
                             </div>
                             <div id="other-container"></div>
                             <button class="btn-add" onclick="addAssetField('other-container')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Item
+                                <span data-i18n="addItem">Add Item</span>
                             </button>
                         </div>
                     </div>
@@ -237,17 +247,17 @@
                     <div class="card">
                         <div class="card-title">
                             <span class="material-icons">credit_card</span>
-                            Your Liabilities
+                            <span data-i18n="yourLiabilities">Your Liabilities</span>
                         </div>
                         <div class="asset-category" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border-left-color: var(--error-color);">
                             <div class="category-header" style="color: var(--error-color);">
                                 <span class="material-icons">account_balance</span>
-                                Debts & Loans
+                                <span data-i18n="debtsLoans">Debts & Loans</span>
                             </div>
                             <div id="debts-container"></div>
                             <button class="btn-add" style="border-color: var(--error-color); color: var(--error-color);" onclick="addDebtField('debts-container')">
                                 <span class="material-icons">add_circle_outline</span>
-                                Add Debt
+                                <span data-i18n="addDebt">Add Debt</span>
                             </button>
                         </div>
                     </div>
@@ -258,42 +268,42 @@
                     <div class="card" style="background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%); color: white;">
                         <div class="card-title" style="color: white;">
                             <span class="material-icons">summarize</span>
-                            Zakat Summary
+                            <span data-i18n="zakatSummary">Zakat Summary</span>
                         </div>
 
                         <div style="margin-bottom: 1.5rem;">
-                            <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.25rem;">Total Assets</div>
+                            <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.25rem;" data-i18n="totalAssets">Total Assets</div>
                             <div style="font-size: 2rem; font-weight: 700;" id="totalAssets">&#8377;0.00</div>
                         </div>
 
                         <div style="margin-bottom: 1.5rem;">
-                            <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.25rem;">Total Debts</div>
+                            <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.25rem;" data-i18n="totalDebts">Total Debts</div>
                             <div style="font-size: 1.5rem; font-weight: 600; color: #ffcdd2;" id="totalDebts">&#8377;0.00</div>
                         </div>
 
                         <div style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.2);">
-                            <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.25rem;">Net Zakatable Wealth</div>
+                            <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.25rem;" data-i18n="netZakatableWealth">Net Zakatable Wealth</div>
                             <div style="font-size: 1.75rem; font-weight: 700;" id="netWealth">&#8377;0.00</div>
-                            <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 0.25rem;">Assets - Debts</div>
+                            <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 0.25rem;" data-i18n="assetsMinusDebts">Assets - Debts</div>
                         </div>
 
                         <div style="margin-bottom: 1.5rem;">
-                            <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.75rem;">Nisab Status</div>
+                            <div style="opacity: 0.9; font-size: 0.9rem; margin-bottom: 0.75rem;" data-i18n="nisabStatus">Nisab Status</div>
                             <div id="nisabStatus"></div>
                         </div>
 
                         <div id="zakatDueSection" style="display: none;">
                             <div style="background: white; color: var(--primary-dark); padding: 1.5rem; border-radius: 8px; text-align: center;">
-                                <div style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 0.5rem;">Your Zakat Amount</div>
+                                <div style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 0.5rem;" data-i18n="yourZakatAmount">Your Zakat Amount</div>
                                 <div style="font-size: 3rem; font-weight: 800;" id="zakatAmount">&#8377;0.00</div>
-                                <div style="font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem;">2.5% of Net Wealth</div>
+                                <div style="font-size: 0.85rem; opacity: 0.7; margin-top: 0.5rem;" data-i18n="percentOfNetWealth">2.5% of Net Wealth</div>
                             </div>
                         </div>
 
                         <div id="noZakatSection" style="display: none;">
                             <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px; text-align: center;">
-                                <div style="font-size: 1.1rem; font-weight: 600;">No Zakat Due</div>
-                                <div style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;">Wealth below Nisab threshold</div>
+                                <div style="font-size: 1.1rem; font-weight: 600;" data-i18n="noZakatDue">No Zakat Due</div>
+                                <div style="font-size: 0.9rem; opacity: 0.8; margin-top: 0.5rem;" data-i18n="belowNisabThreshold">Wealth below Nisab threshold</div>
                             </div>
                         </div>
                     </div>
@@ -302,15 +312,15 @@
                     <div class="card no-print">
                         <button class="btn btn-primary btn-block" onclick="saveCalculation()">
                             <span class="material-icons">save</span>
-                            Save Calculation
+                            <span data-i18n="saveCalculation">Save Calculation</span>
                         </button>
                         <button class="btn btn-secondary btn-block" onclick="window.print()">
                             <span class="material-icons">print</span>
-                            Print / Export PDF
+                            <span data-i18n="printExport">Print / Export PDF</span>
                         </button>
                         <button class="btn btn-secondary btn-block" onclick="resetCalculation()">
                             <span class="material-icons">refresh</span>
-                            Reset All
+                            <span data-i18n="resetAll">Reset All</span>
                         </button>
                     </div>
                 </div>
@@ -321,27 +331,27 @@
         <div id="dashboard" class="tab-content active">
             <div class="dashboard-grid">
                 <div class="stat-card">
-                    <div class="stat-label">Total Zakat Due</div>
+                    <div class="stat-label" data-i18n="totalZakatDue">Total Zakat Due</div>
                     <div class="stat-value" id="dashTotalZakat">&#8377;0.00</div>
-                    <div class="stat-subtitle">2.5% of net wealth</div>
+                    <div class="stat-subtitle" data-i18n="zakatSubtitle">2.5% of net wealth</div>
                 </div>
 
                 <div class="stat-card success">
-                    <div class="stat-label">Total Paid</div>
+                    <div class="stat-label" data-i18n="totalPaid">Total Paid</div>
                     <div class="stat-value" style="color: var(--success-color);" id="dashTotalPaid">&#8377;0.00</div>
                     <div class="stat-subtitle" id="dashPaymentCount">0 payments made</div>
                 </div>
 
                 <div class="stat-card warning">
-                    <div class="stat-label">Remaining</div>
+                    <div class="stat-label" data-i18n="remaining">Remaining</div>
                     <div class="stat-value" style="color: var(--warning-color);" id="dashRemaining">&#8377;0.00</div>
-                    <div class="stat-subtitle">Still to pay</div>
+                    <div class="stat-subtitle" data-i18n="stillToPay">Still to pay</div>
                 </div>
 
                 <div class="stat-card">
-                    <div class="stat-label">Net Wealth</div>
+                    <div class="stat-label" data-i18n="netWealth">Net Wealth</div>
                     <div class="stat-value" id="dashNetWealth">&#8377;0.00</div>
-                    <div class="stat-subtitle">Total zakatable wealth</div>
+                    <div class="stat-subtitle" data-i18n="totalZakatableWealth">Total zakatable wealth</div>
                 </div>
             </div>
 
@@ -349,7 +359,7 @@
             <div class="card">
                 <div class="card-title">
                     <span class="material-icons">timeline</span>
-                    Payment Progress
+                    <span data-i18n="paymentProgress">Payment Progress</span>
                 </div>
                 <div class="progress-container">
                     <div class="progress-bar">
@@ -366,20 +376,20 @@
             <div class="card">
                 <div class="card-title">
                     <span class="material-icons">bolt</span>
-                    Quick Actions
+                    <span data-i18n="quickActions">Quick Actions</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
                     <button class="btn btn-success" onclick="openPaymentModal()">
                         <span class="material-icons">add</span>
-                        Record Payment
+                        <span data-i18n="recordPayment">Record Payment</span>
                     </button>
                     <button class="btn btn-secondary" onclick="switchTab('calculator')">
                         <span class="material-icons">refresh</span>
-                        Recalculate Zakat
+                        <span data-i18n="recalculateZakat">Recalculate Zakat</span>
                     </button>
                     <button class="btn btn-secondary" onclick="switchTab('payments')">
                         <span class="material-icons">history</span>
-                        View All Payments
+                        <span data-i18n="viewAllPayments">View All Payments</span>
                     </button>
                 </div>
             </div>
@@ -388,7 +398,7 @@
             <div class="card">
                 <div class="card-title">
                     <span class="material-icons">receipt</span>
-                    Recent Payments
+                    <span data-i18n="recentPayments">Recent Payments</span>
                 </div>
                 <div id="recentPaymentsList"></div>
             </div>
@@ -399,10 +409,10 @@
             <div class="card">
                 <div class="card-title">
                     <span class="material-icons">payment</span>
-                    All Payments
+                    <span data-i18n="allPayments">All Payments</span>
                     <button class="btn btn-success" onclick="openPaymentModal()" style="margin-left: auto;">
                         <span class="material-icons">add</span>
-                        Add Payment
+                        <span data-i18n="addPayment">Add Payment</span>
                     </button>
                 </div>
                 <div id="allPaymentsList"></div>
@@ -414,7 +424,7 @@
             <div class="card">
                 <div class="card-title">
                     <span class="material-icons">history</span>
-                    Saved Calculations
+                    <span data-i18n="savedCalculations">Saved Calculations</span>
                 </div>
                 <div id="calculationHistory"></div>
             </div>
@@ -425,14 +435,14 @@
     <div id="paymentModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title">Record Zakat Payment</div>
+                <div class="modal-title" data-i18n="recordZakatPayment">Record Zakat Payment</div>
                 <button class="btn-icon" onclick="closePaymentModal()">
                     <span class="material-icons">close</span>
                 </button>
             </div>
 
             <div class="input-group">
-                <label class="input-label">Payment Amount</label>
+                <label class="input-label" data-i18n="paymentAmount">Payment Amount</label>
                 <div class="input-with-icon">
                     <span class="input-icon currency-symbol">&#8377;</span>
                     <input type="number" id="paymentAmount" class="input-field" step="0.01" placeholder="0.00">
@@ -440,18 +450,18 @@
             </div>
 
             <div class="input-group">
-                <label class="input-label">Payment Date</label>
+                <label class="input-label" data-i18n="paymentDate">Payment Date</label>
                 <input type="date" id="paymentDate" class="input-field">
             </div>
 
             <div class="input-group">
-                <label class="input-label">Notes (Optional)</label>
-                <input type="text" id="paymentNote" class="input-field" placeholder="e.g., Paid to local mosque">
+                <label class="input-label" data-i18n="notesOptional">Notes (Optional)</label>
+                <input type="text" id="paymentNote" class="input-field" data-i18n-placeholder="notesPlaceholder" placeholder="e.g., Paid to local mosque">
             </div>
 
             <button class="btn btn-success btn-block" onclick="recordPayment()">
                 <span class="material-icons">check_circle</span>
-                Save Payment
+                <span data-i18n="savePayment">Save Payment</span>
             </button>
         </div>
     </div>
@@ -459,7 +469,7 @@
     <!-- Material Design JS -->
     <script src="https://unpkg.com/material-components-web@14.0.0/dist/material-components-web.min.js"></script>
 
+    <script src="i18n.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
-

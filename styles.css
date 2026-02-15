@@ -666,3 +666,133 @@ body {
     background: rgba(158,158,158,0.1);
     color: var(--text-secondary);
 }
+
+/* Language Switcher */
+.hero-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.lang-switcher {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+}
+
+.lang-btn {
+    padding: 0.4rem 0.85rem;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 6px;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.85);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.lang-btn:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.6);
+    color: white;
+}
+
+.lang-btn.active {
+    background: white;
+    color: var(--primary-dark);
+    border-color: white;
+}
+
+/* Language-specific font families */
+[lang="ur"] body {
+    font-family: 'Noto Nastaliq Urdu', 'Amiri', serif;
+    line-height: 2;
+}
+
+[lang="bn"] body {
+    font-family: 'Noto Sans Bengali', 'Amiri', sans-serif;
+    line-height: 1.8;
+}
+
+[lang="hi"] body {
+    font-family: 'Noto Sans Devanagari', 'Amiri', sans-serif;
+    line-height: 1.8;
+}
+
+[lang="ur"] .nav-tab,
+[lang="ur"] .btn,
+[lang="ur"] .btn-add,
+[lang="ur"] .currency-btn,
+[lang="ur"] .input-field {
+    font-family: 'Noto Nastaliq Urdu', 'Amiri', serif;
+}
+
+[lang="bn"] .nav-tab,
+[lang="bn"] .btn,
+[lang="bn"] .btn-add,
+[lang="bn"] .currency-btn,
+[lang="bn"] .input-field {
+    font-family: 'Noto Sans Bengali', 'Amiri', sans-serif;
+}
+
+[lang="hi"] .nav-tab,
+[lang="hi"] .btn,
+[lang="hi"] .btn-add,
+[lang="hi"] .currency-btn,
+[lang="hi"] .input-field {
+    font-family: 'Noto Sans Devanagari', 'Amiri', sans-serif;
+}
+
+/* RTL (Urdu) Overrides */
+[dir="rtl"] .info-banner {
+    border-left: none;
+    border-right: 4px solid var(--warning-color);
+}
+
+[dir="rtl"] .info-banner ul {
+    margin-left: 0;
+    margin-right: 1.5rem;
+}
+
+[dir="rtl"] .asset-category {
+    border-left: none;
+    border-right: 4px solid var(--primary-color);
+}
+
+[dir="rtl"] .asset-category[style*="border-left-color"] {
+    border-left: none;
+    border-right: 4px solid var(--error-color);
+}
+
+[dir="rtl"] .stat-card {
+    border-left: none;
+    border-right: 4px solid var(--primary-color);
+}
+
+[dir="rtl"] .stat-card.success {
+    border-left: none;
+    border-right-color: var(--success-color);
+}
+
+[dir="rtl"] .stat-card.warning {
+    border-left: none;
+    border-right-color: var(--warning-color);
+}
+
+[dir="rtl"] .input-icon {
+    left: auto;
+    right: 1rem;
+}
+
+[dir="rtl"] .input-with-icon .input-field {
+    padding-left: 1rem;
+    padding-right: 3rem;
+}
+
+[dir="rtl"] .card-title button[style*="margin-left: auto"] {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+}

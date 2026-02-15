@@ -17,9 +17,9 @@ let formData = {
     currencySymbol: '\u20B9',
     silverPrice: 90,
     goldRate: 0,
-    assets: {},   // keyed by container id, array of {description, value}
-    metals: {},   // keyed by container id, array of {description, grams}
-    debts: []     // array of {description, value}
+    assets: {},
+    metals: {},
+    debts: []
 };
 
 // Initialize
@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadFromStorage();
     loadFormData();
     document.getElementById('paymentDate').valueAsDate = new Date();
+    initLanguage();
 });
 
 // Load data from localStorage
@@ -44,13 +45,11 @@ function saveToStorage() {
 
 // Save form data to localStorage
 function saveFormData() {
-    // Collect all asset fields
     formData.currency = currentCurrency;
     formData.currencySymbol = currencySymbol;
     formData.silverPrice = parseFloat(document.getElementById('silverPrice').value) || 0;
     formData.goldRate = parseFloat(document.getElementById('goldRate').value) || 0;
 
-    // Collect regular asset containers
     const assetContainers = ['cash-container', 'investments-container', 'business-container', 'property-container', 'receivables-container', 'other-container'];
     formData.assets = {};
     assetContainers.forEach(containerId => {
@@ -63,7 +62,6 @@ function saveFormData() {
         formData.assets[containerId] = items;
     });
 
-    // Collect metal containers (gold/silver in grams)
     const metalContainers = ['gold-container', 'silver-container'];
     formData.metals = {};
     metalContainers.forEach(containerId => {
@@ -76,7 +74,6 @@ function saveFormData() {
         formData.metals[containerId] = items;
     });
 
-    // Collect debts
     formData.debts = [];
     document.querySelectorAll('#debts-container .asset-item').forEach(item => {
         const desc = item.querySelector('input[type="text"]')?.value || '';
@@ -93,7 +90,6 @@ function loadFormData() {
     if (saved) {
         formData = JSON.parse(saved);
 
-        // Restore currency
         currentCurrency = formData.currency || 'INR';
         currencySymbol = formData.currencySymbol || '\u20B9';
         document.querySelectorAll('.currency-symbol').forEach(el => {
@@ -106,11 +102,9 @@ function loadFormData() {
             }
         });
 
-        // Restore rates
         document.getElementById('silverPrice').value = formData.silverPrice || 90;
         document.getElementById('goldRate').value = formData.goldRate || 0;
 
-        // Restore regular assets
         const assetContainers = ['cash-container', 'investments-container', 'business-container', 'property-container', 'receivables-container', 'other-container'];
         assetContainers.forEach(containerId => {
             const items = formData.assets[containerId];
@@ -123,7 +117,6 @@ function loadFormData() {
             }
         });
 
-        // Restore metal fields
         const metalContainers = { 'gold-container': 'gold', 'silver-container': 'silver' };
         Object.entries(metalContainers).forEach(([containerId, metalType]) => {
             const items = formData.metals[containerId];
@@ -136,7 +129,6 @@ function loadFormData() {
             }
         });
 
-        // Restore debts
         if (formData.debts && formData.debts.length > 0) {
             formData.debts.forEach(item => {
                 addDebtField('debts-container', item.description, item.value);
@@ -145,7 +137,6 @@ function loadFormData() {
             addDebtField('debts-container');
         }
     } else {
-        // First time — initialize with empty fields
         initializeAssetFields();
     }
 
@@ -201,37 +192,37 @@ function setCurrency(currency, symbol) {
     saveFormData();
 }
 
-// Add asset field (regular currency-value field)
+// Add asset field
 function addAssetField(containerId, desc, val) {
     const container = document.getElementById(containerId);
     const item = document.createElement('div');
     item.className = 'asset-item';
     item.innerHTML = `
-        <input type="text" class="input-field" placeholder="Description" value="${desc || ''}" oninput="onFormChange()">
+        <input type="text" class="input-field" data-i18n-placeholder="descriptionPlaceholder" placeholder="${t('descriptionPlaceholder')}" value="${desc || ''}" oninput="onFormChange()">
         <div class="input-with-icon" style="width: 200px;">
             <span class="input-icon currency-symbol">${currencySymbol}</span>
             <input type="number" class="input-field asset-value" step="0.01" placeholder="0.00" value="${val || ''}" oninput="onFormChange(); calculateZakat();">
         </div>
-        <button class="btn-icon delete" onclick="this.parentElement.remove(); onFormChange(); calculateZakat();">
+        <button type="button" class="btn-icon delete" onclick="this.parentElement.remove(); onFormChange(); calculateZakat();">
             <span class="material-icons">delete</span>
         </button>
     `;
     container.appendChild(item);
 }
 
-// Add metal field (grams-based for gold/silver)
+// Add metal field
 function addMetalField(containerId, metalType, desc, grams) {
     const container = document.getElementById(containerId);
     const item = document.createElement('div');
     item.className = 'asset-item metal-item';
     item.setAttribute('data-metal', metalType);
     item.innerHTML = `
-        <input type="text" class="input-field" placeholder="e.g. Necklace, Ring, Coins" value="${desc || ''}" oninput="onFormChange()">
+        <input type="text" class="input-field" data-i18n-placeholder="metalPlaceholder" placeholder="${t('metalPlaceholder')}" value="${desc || ''}" oninput="onFormChange()">
         <div class="input-with-icon" style="width: 200px;">
             <span class="input-icon" style="font-size: 0.8rem; color: var(--text-secondary);">gm</span>
             <input type="number" class="input-field metal-grams" step="0.01" placeholder="0.00" value="${grams || ''}" oninput="onFormChange(); calculateZakat();">
         </div>
-        <button class="btn-icon delete" onclick="this.parentElement.remove(); onFormChange(); calculateZakat();">
+        <button type="button" class="btn-icon delete" onclick="this.parentElement.remove(); onFormChange(); calculateZakat();">
             <span class="material-icons">delete</span>
         </button>
     `;
@@ -244,12 +235,12 @@ function addDebtField(containerId, desc, val) {
     const item = document.createElement('div');
     item.className = 'asset-item';
     item.innerHTML = `
-        <input type="text" class="input-field" placeholder="Description" value="${desc || ''}" oninput="onFormChange()">
+        <input type="text" class="input-field" data-i18n-placeholder="descriptionPlaceholder" placeholder="${t('descriptionPlaceholder')}" value="${desc || ''}" oninput="onFormChange()">
         <div class="input-with-icon" style="width: 200px;">
             <span class="input-icon currency-symbol">${currencySymbol}</span>
             <input type="number" class="input-field debt-value" step="0.01" placeholder="0.00" value="${val || ''}" oninput="onFormChange(); calculateZakat();">
         </div>
-        <button class="btn-icon delete" onclick="this.parentElement.remove(); onFormChange(); calculateZakat();">
+        <button type="button" class="btn-icon delete" onclick="this.parentElement.remove(); onFormChange(); calculateZakat();">
             <span class="material-icons">delete</span>
         </button>
     `;
@@ -267,25 +258,21 @@ function calculateZakat() {
     const goldRate = parseFloat(document.getElementById('goldRate').value) || 0;
     const nisabThreshold = silverPrice * NISAB_SILVER_GRAMS;
 
-    // Calculate gold value from grams
     let totalGoldGrams = 0;
     document.querySelectorAll('#gold-container .metal-grams').forEach(input => {
         totalGoldGrams += parseFloat(input.value) || 0;
     });
     const goldValue = totalGoldGrams * goldRate;
 
-    // Calculate silver value from grams
     let totalSilverGrams = 0;
     document.querySelectorAll('#silver-container .metal-grams').forEach(input => {
         totalSilverGrams += parseFloat(input.value) || 0;
     });
     const silverValue = totalSilverGrams * silverPrice;
 
-    // Update metal total displays
     document.getElementById('goldTotalValue').textContent = formatCurrency(goldValue);
     document.getElementById('silverTotalValue').textContent = formatCurrency(silverValue);
 
-    // Calculate regular asset values
     let totalRegularAssets = 0;
     document.querySelectorAll('.asset-value').forEach(input => {
         totalRegularAssets += parseFloat(input.value) || 0;
@@ -301,7 +288,6 @@ function calculateZakat() {
     const netWealth = totalAssets - totalDebts;
     const zakatAmount = netWealth * ZAKAT_PERCENTAGE;
 
-    // Update UI
     document.getElementById('nisabThreshold').textContent = formatCurrency(nisabThreshold);
     document.getElementById('totalAssets').textContent = formatCurrency(totalAssets);
     document.getElementById('totalDebts').textContent = formatCurrency(totalDebts);
@@ -311,7 +297,7 @@ function calculateZakat() {
         document.getElementById('nisabStatus').innerHTML = `
             <span class="nisab-badge eligible">
                 <span class="material-icons" style="font-size: 1rem;">check_circle</span>
-                Zakat Obligatory
+                ${t('zakatObligatory')}
             </span>
         `;
         document.getElementById('zakatAmount').textContent = formatCurrency(zakatAmount);
@@ -325,7 +311,7 @@ function calculateZakat() {
         document.getElementById('nisabStatus').innerHTML = `
             <span class="nisab-badge not-eligible">
                 <span class="material-icons" style="font-size: 1rem;">cancel</span>
-                Below Nisab
+                ${t('belowNisab')}
             </span>
         `;
         document.getElementById('zakatDueSection').style.display = 'none';
@@ -358,7 +344,6 @@ function saveCalculation() {
         debts: []
     };
 
-    // Collect regular assets
     const regularContainers = ['cash-container', 'investments-container', 'business-container', 'property-container', 'receivables-container', 'other-container'];
     regularContainers.forEach(containerId => {
         document.querySelectorAll(`#${containerId} .asset-item`).forEach(item => {
@@ -370,7 +355,6 @@ function saveCalculation() {
         });
     });
 
-    // Collect metal assets with calculated values
     const goldRate = parseFloat(document.getElementById('goldRate').value) || 0;
     const silverPrice = parseFloat(document.getElementById('silverPrice').value) || 0;
     document.querySelectorAll('#gold-container .metal-item').forEach(item => {
@@ -388,7 +372,6 @@ function saveCalculation() {
         }
     });
 
-    // Collect debts
     document.querySelectorAll('#debts-container .asset-item').forEach(item => {
         const desc = item.querySelector('input[type="text"]')?.value;
         const value = item.querySelector('.debt-value')?.value;
@@ -401,12 +384,12 @@ function saveCalculation() {
     zakatData.calculations = zakatData.calculations.slice(0, 20);
     saveToStorage();
 
-    alert('✓ Calculation saved successfully!');
+    alert(t('alertCalcSaved'));
 }
 
 // Reset calculation
 function resetCalculation() {
-    if (!confirm('Are you sure you want to reset all values?')) return;
+    if (!confirm(t('confirmReset'))) return;
 
     document.querySelectorAll('.asset-value, .debt-value, .metal-grams').forEach(input => {
         input.value = '';
@@ -438,12 +421,12 @@ function recordPayment() {
     const note = document.getElementById('paymentNote').value;
 
     if (!amount || amount <= 0) {
-        alert('Please enter a valid payment amount');
+        alert(t('alertInvalidAmount'));
         return;
     }
 
     if (!date) {
-        alert('Please select a payment date');
+        alert(t('alertSelectDate'));
         return;
     }
 
@@ -461,7 +444,7 @@ function recordPayment() {
 
     closePaymentModal();
     updateDashboard();
-    alert('✓ Payment recorded successfully!');
+    alert(t('alertPaymentSaved'));
 }
 
 // Update dashboard
@@ -474,7 +457,7 @@ function updateDashboard() {
     document.getElementById('dashTotalPaid').textContent = formatCurrency(totalPaid);
     document.getElementById('dashRemaining').textContent = formatCurrency(remaining);
     document.getElementById('dashNetWealth').textContent = formatCurrency(zakatData.netWealth);
-    document.getElementById('dashPaymentCount').textContent = `${zakatData.payments.length} payment${zakatData.payments.length !== 1 ? 's' : ''} made`;
+    document.getElementById('dashPaymentCount').textContent = `${zakatData.payments.length} ${t('paymentsMade')}`;
 
     document.getElementById('progressFill').style.width = Math.min(progress, 100) + '%';
     document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
@@ -494,7 +477,7 @@ function displayRecentPayments() {
                 <div class="empty-state-icon">
                     <span class="material-icons">receipt_long</span>
                 </div>
-                <div>No payments recorded yet</div>
+                <div>${t('noPaymentsYet')}</div>
             </div>
         `;
         return;
@@ -507,7 +490,7 @@ function displayRecentPayments() {
                 <div class="payment-date">${new Date(payment.date).toLocaleDateString()}</div>
                 ${payment.note ? `<div class="payment-note">${payment.note}</div>` : ''}
             </div>
-            <button class="btn-icon delete" onclick="deletePayment(${payment.id})">
+            <button type="button" class="btn-icon delete" onclick="deletePayment(${payment.id})">
                 <span class="material-icons">delete</span>
             </button>
         </div>
@@ -524,10 +507,10 @@ function displayAllPayments() {
                 <div class="empty-state-icon">
                     <span class="material-icons">receipt_long</span>
                 </div>
-                <div>No payments recorded yet</div>
-                <button class="btn btn-success" onclick="openPaymentModal()" style="margin-top: 1rem;">
+                <div>${t('noPaymentsYet')}</div>
+                <button type="button" class="btn btn-success" onclick="openPaymentModal()" style="margin-top: 1rem;">
                     <span class="material-icons">add</span>
-                    Add First Payment
+                    ${t('addFirstPayment')}
                 </button>
             </div>
         `;
@@ -541,7 +524,7 @@ function displayAllPayments() {
                 <div class="payment-date">${new Date(payment.date).toLocaleDateString()}</div>
                 ${payment.note ? `<div class="payment-note">${payment.note}</div>` : ''}
             </div>
-            <button class="btn-icon delete" onclick="deletePayment(${payment.id})">
+            <button type="button" class="btn-icon delete" onclick="deletePayment(${payment.id})">
                 <span class="material-icons">delete</span>
             </button>
         </div>
@@ -550,7 +533,7 @@ function displayAllPayments() {
 
 // Delete payment
 function deletePayment(id) {
-    if (!confirm('Are you sure you want to delete this payment?')) return;
+    if (!confirm(t('confirmDeletePayment'))) return;
 
     zakatData.payments = zakatData.payments.filter(p => p.id !== id);
     saveToStorage();
@@ -568,7 +551,7 @@ function displayCalculationHistory() {
                 <div class="empty-state-icon">
                     <span class="material-icons">history</span>
                 </div>
-                <div>No saved calculations yet</div>
+                <div>${t('noCalculationsYet')}</div>
             </div>
         `;
         return;
@@ -581,9 +564,9 @@ function displayCalculationHistory() {
                 <div class="payment-info">
                     <div class="payment-amount">${calc.currencySymbol} ${calc.totalZakat.toFixed(2)}</div>
                     <div class="payment-date">${date.toLocaleDateString()} ${date.toLocaleTimeString()}</div>
-                    <div class="payment-note">${calc.currency} - Net Wealth: ${calc.currencySymbol} ${calc.netWealth.toFixed(2)}</div>
+                    <div class="payment-note">${calc.currency} - ${t('netWealth')}: ${calc.currencySymbol} ${calc.netWealth.toFixed(2)}</div>
                 </div>
-                <button class="btn-icon delete" onclick="deleteCalculation(${index})">
+                <button type="button" class="btn-icon delete" onclick="deleteCalculation(${index})">
                     <span class="material-icons">delete</span>
                 </button>
             </div>
@@ -593,7 +576,7 @@ function displayCalculationHistory() {
 
 // Delete calculation
 function deleteCalculation(index) {
-    if (!confirm('Are you sure you want to delete this calculation?')) return;
+    if (!confirm(t('confirmDeleteCalc'))) return;
 
     zakatData.calculations.splice(index, 1);
     saveToStorage();
