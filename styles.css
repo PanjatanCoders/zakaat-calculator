@@ -747,6 +747,86 @@ body {
     color: var(--text-secondary);
 }
 
+/* Disclaimer Banner */
+.disclaimer-banner {
+    background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+    border-left: 4px solid #e91e63;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: #880e4f;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.disclaimer-banner .material-icons {
+    color: #e91e63;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+[dir="rtl"] .disclaimer-banner {
+    border-left: none;
+    border-right: 4px solid #e91e63;
+}
+
+/* Footer */
+.app-footer {
+    background: var(--primary-dark);
+    color: rgba(255,255,255,0.8);
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+}
+
+.footer-app-info {
+    max-width: 600px;
+    margin: 0 auto 1rem;
+    line-height: 1.6;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.65);
+}
+
+.footer-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--secondary-color);
+    margin: 0 auto 1rem;
+    opacity: 0.5;
+    border-radius: 1px;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.footer-copyright {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+}
+
+.app-footer a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.app-footer a:hover {
+    color: var(--secondary-light);
+    text-decoration: underline;
+}
+
 /* Language Switcher */
 .hero-top-row {
     display: flex;

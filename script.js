@@ -24,6 +24,7 @@ let formData = {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
+    window.scrollTo(0, 0);
     loadFromStorage();
     loadFormData();
     document.getElementById('paymentDate').valueAsDate = new Date();
