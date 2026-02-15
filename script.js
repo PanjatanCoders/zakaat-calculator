@@ -22,9 +22,16 @@ let formData = {
     debts: []
 };
 
+// Force scroll to top on refresh
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.addEventListener('load', function() {
+    window.scrollTo(0, 0);
+});
+
 // Initialize
 document.addEventListener('DOMContentLoaded', function() {
-    window.scrollTo(0, 0);
     loadFromStorage();
     loadFormData();
     document.getElementById('paymentDate').valueAsDate = new Date();
