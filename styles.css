@@ -616,20 +616,100 @@ body {
     #calculator > div {
         grid-template-columns: 1fr !important;
     }
+    #calculator > div > div[style*="position: sticky"] {
+        position: static !important;
+    }
 }
 
 @media (max-width: 768px) {
+    .hero-header {
+        padding: 1.5rem 1rem;
+    }
+    .hero-top-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
     .hero-title {
-        font-size: 2rem;
+        font-size: 1.75rem;
+    }
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+    .lang-switcher {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .nav-tab {
+        min-width: 0;
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    .nav-tab .material-icons {
+        font-size: 1.1rem;
     }
     .container {
+        padding: 0.75rem;
+    }
+    .card {
         padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    .card-title {
+        font-size: 1.15rem;
     }
     .asset-item {
         grid-template-columns: 1fr;
     }
+    .asset-item .input-with-icon {
+        width: 100% !important;
+    }
     .dashboard-grid {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    .stat-value {
+        font-size: 1.5rem;
+    }
+    .currency-grid {
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 0.5rem;
+    }
+    .currency-btn {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.85rem;
+    }
+    .info-banner {
+        padding: 1rem;
+        font-size: 0.85rem;
+    }
+    .info-banner ul {
+        margin-left: 1rem;
+    }
+    [dir="rtl"] .info-banner ul {
+        margin-right: 1rem;
+    }
+    .btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+    .modal-content {
+        padding: 1.25rem;
+        margin: 0.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    /* Metal rates: stack to 1 column */
+    .card > div[style*="grid-template-columns: 1fr 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+    /* Quick actions: single column */
+    .card > div[style*="repeat(auto-fit, minmax(200px"] {
+        grid-template-columns: 1fr !important;
+    }
+    /* Zakat amount large text */
+    #zakatAmount {
+        font-size: 2rem !important;
     }
 }
 
