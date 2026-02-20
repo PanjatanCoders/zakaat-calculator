@@ -1,7 +1,8 @@
 // Global State
 let currentCurrency = 'INR';
 let currencySymbol = '\u20B9';
-const NISAB_SILVER_GRAMS = 612.36;
+const NISAB_SILVER_GRAMS = 653.184; // 52.5 tola
+const NISAB_GOLD_GRAMS = 93.312;    // 7.5 tola
 const ZAKAT_PERCENTAGE = 0.025;
 
 let zakatData = {
